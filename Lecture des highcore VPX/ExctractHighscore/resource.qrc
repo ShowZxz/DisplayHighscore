@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/Banner.jpg</file>
+        <file>img/loacation.jpg</file>
+        <file>img/placeholder.png</file>
+        <file>img/comics_background.jpg</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
+</RCC>
