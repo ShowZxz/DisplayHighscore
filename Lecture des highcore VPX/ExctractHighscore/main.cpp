@@ -27,37 +27,72 @@ int main(int argc, char *argv[])
     MainWindow w;
     Ui::MainWindow ui;
     ui.setupUi(&w);
+
+    //instanciation class Highscore
+//#############################################################################################################################################################
+Highscore high;
+Highscore high1;
+Highscore high2;
+Highscore high_world;
+Highscore high_world1;
+Highscore high_world2;
+
+
+QString vpinball = "VPinballX.exe";
+
+
+
+
+
+
+                                                             //ini File
+//############################################################################################################################################################
+
+
+
+
+
+
+
+
+
+    int numToperScreen =high.getToperScreen();
+
+    QString pinemhi_worldpath = high.getLeaderboardPath();
+    QString pinemhi_userpath= high.getUserScorePath();
+    QString username = high.getUsernameFromConfig();
+    QString password = high.getPasswordFromConfig();
+    qDebug()<< numToperScreen;
+    qDebug()<< password +" //// "+username +"W "+pinemhi_userpath+" W "+pinemhi_worldpath;
+
+
+    //VERIFY PASSWORD AND USERNAME HERE
+    if (username.isEmpty() || password.isEmpty()) {
+            QMessageBox::critical(nullptr, "Erreur", "Nom d'utilisateur ou mot de passe manquant dans le fichier de configuration.");
+            return 1; // Quitter l'application avec un code d'erreur
+        }
+
                                                            //CONFIGURATION OF SCREEN
 //############################################################################################################################################################
     QList<QScreen*> screens = QGuiApplication::screens();
 
         // Vérifiez si le deuxième écran existe
-        if (screens.size() > 1) {
-            QScreen* secondScreen = screens.at(1);
+        if (screens.size() > numToperScreen) {
+            QScreen* toperScreen = screens.at(numToperScreen);
 
             // Afficher la fenêtre en plein écran sur le deuxième écran
             w.setWindowState(Qt::WindowFullScreen);
 
 
             // Déplacez la fenêtre vers le deuxième écran
-            w.move(secondScreen->geometry().x(), secondScreen->geometry().y());
+            w.move(toperScreen->geometry().x(), toperScreen->geometry().y());
         }
 
 
 
 
 
-                                                  //instanciation class Highscore et sgdb
-//#############################################################################################################################################################
-    Highscore high;
-    Highscore high1;
-    Highscore high2;
-    Highscore high_world;
-    Highscore high_world1;
-    Highscore high_world2;
-    Sgdb sgdb;
 
-    QString vpinball = "VPinballX.exe";
 
                                                                  //CONFIGURATION OF LABEL
 //#############################################################################################################################################################
@@ -85,23 +120,6 @@ int main(int argc, char *argv[])
 
 
 
-int fontSizeCategory1 = 12;
-int fontSizeCategory2 = 12;
-
-
-
-
-
-
-
-
-
-
-QPixmap pix_banner;
-QPixmap pix("C:/Users/lilia/OneDrive/Documents/Mes projet Qt/Lecture des highcore VPX/ExctractHighscore/img/placeholder");
-int width = label_namecab->width();
-int height = label_namecab->height();
-label_namecab->setPixmap(pix.scaled(width,height,Qt::KeepAspectRatio));
 
 
 
@@ -120,22 +138,25 @@ label_world3->setStyleSheet(styleSheet2);
 label_world_score1->setStyleSheet(styleSheet);
 label_world_score2->setStyleSheet(styleSheet);
 label_world_score3->setStyleSheet(styleSheet);
+label_title->setStyleSheet(styleSheet);
+label_title_world->setStyleSheet(styleSheet);
 
 
 
-
+label_title->setFont(QFont("Gotham Medium"));
+label_title_world->setFont(QFont("Gotham Medium"));
 label_high_user1->setFont(QFont("Swipe Race Demo"));
-label_high_user2->setFont(QFont("Gotham Medium", fontSizeCategory2));
-label_high_user3->setFont(QFont("Gotham Medium", fontSizeCategory2));
-label_user1->setFont(QFont("Gotham Medium", fontSizeCategory1));
-label_user2->setFont(QFont("Gotham Medium", fontSizeCategory1));
-label_user3->setFont(QFont("Gotham Medium", fontSizeCategory1));
-label_world1->setFont(QFont("Gotham Medium", fontSizeCategory1));
-label_world2->setFont(QFont("Gotham Medium", fontSizeCategory1));
-label_world3->setFont(QFont("Gotham Medium", fontSizeCategory1));
-label_world_score1->setFont(QFont("Gotham Medium", fontSizeCategory2));
-label_world_score2->setFont(QFont("Gotham Medium", fontSizeCategory2));
-label_world_score3->setFont(QFont("Gotham Medium", fontSizeCategory2));
+label_high_user2->setFont(QFont("Gotham Medium"));
+label_high_user3->setFont(QFont("Gotham Medium"));
+label_user1->setFont(QFont("Gotham Medium"));
+label_user2->setFont(QFont("Gotham Medium"));
+label_user3->setFont(QFont("Gotham Medium"));
+label_world1->setFont(QFont("Gotham Medium"));
+label_world2->setFont(QFont("Gotham Medium"));
+label_world3->setFont(QFont("Gotham Medium"));
+label_world_score1->setFont(QFont("Gotham Medium"));
+label_world_score2->setFont(QFont("Gotham Medium"));
+label_world_score3->setFont(QFont("Gotham Medium"));
 
 
 
@@ -144,11 +165,11 @@ label_world_score3->setFont(QFont("Gotham Medium", fontSizeCategory2));
 
 
 
-
+                                                    //GET ARGV
 //#############################################################################################################################################################
 
 
-            //RECUPERATION ARGV
+
             QString name_NVRAM = "afm_113b.nv";
             QString gameFullName = argv[1];
             //QString name_NVRAM = argv[2];
@@ -166,8 +187,8 @@ label_world_score3->setFont(QFont("Gotham Medium", fontSizeCategory2));
 
             //LECTURE FICHIER HIGHSCORE DE L'USER
 //######################################################################################################################################################
-QFile file2("C:/PINemHi/PINemHi LeaderBoard/TOP10_Personal/"+nvram);
-//QFile file2(Pinemhi_worldpath+nvram);
+//QFile file2("C:/PINemHi/PINemHi LeaderBoard/TOP10_Personal/"+nvram);
+QFile file2(pinemhi_userpath+nvram);
 
 
 
@@ -277,8 +298,8 @@ if (file2.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
                             //LECTURE HIGHSCORE WORLDWIDE
 //######################################################################################################################################################################
-  QFile file3("C:/PINemHi/PINemHi LeaderBoard/TOP10_Best/"+nvram);
-  //QFile file3(Pinemhi_userpath+nvram);
+  //QFile file3("C:/PINemHi/PINemHi LeaderBoard/TOP10_Best/"+nvram);
+  QFile file3(pinemhi_worldpath+nvram);
 
   if (file3.open(QIODevice::ReadOnly | QIODevice::Text)) {
       QTextStream in(&file3);
@@ -311,15 +332,6 @@ if (file2.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
                   qDebug() << "Highscore:" << highscore;
                   qDebug() << "USER: " << user;
-
-
-
-
-
-                  //DISPLAY ON LABEL
-
-
-
 
 
 
@@ -406,13 +418,7 @@ w.show();
                                                             //Record highscore when end
 //#############################################################################################################################################################
 
-QString username = high.getUsernameFromConfig();
-QString password = high.getPasswordFromConfig();
-qDebug()<< password +" / "+username;
-if (username.isEmpty() || password.isEmpty()) {
-        QMessageBox::critical(nullptr, "Erreur", "Nom d'utilisateur ou mot de passe manquant dans le fichier de configuration.");
-        return 1; // Quitter l'application avec un code d'erreur
-    }
+
 Thread thread(vpinball,high.getScore(),high.getUser(),gameFullName);
 
 thread.start();
@@ -425,8 +431,7 @@ thread.start();
 
 
 
-                                                    //Verification user password and recordDataBase
-//#############################################################################################################################################################
+
 
 
 return a.exec();

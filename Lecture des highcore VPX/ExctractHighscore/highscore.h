@@ -23,13 +23,13 @@ public:
            this->user = user;
 
        }
-       QString extractString(QString string_);
 
-       QString extractSubstring(const QString& str, QChar startChar, QChar endChar);
-       QString extractSubstring(const QString& str);
 
        QString getPasswordFromConfig();
        QString getUsernameFromConfig();
+       QString getLeaderboardPath();
+       QString getUserScorePath();
+       int getToperScreen();
        QString getScore (){return score;}
        QString getTitle(){return titre;}
        QString getUser(){return user;}

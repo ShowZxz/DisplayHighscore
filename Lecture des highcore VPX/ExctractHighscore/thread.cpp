@@ -52,7 +52,7 @@ void Thread::run()
 
 
 
-                //qDebug() << m_score;
+
 
                 sgdb.closeDatabase();
                 break;
