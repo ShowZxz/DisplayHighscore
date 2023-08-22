@@ -1,0 +1,36 @@
+
+:FoundKey
+REM Display the extracted value
+echo Value: %result%
+echo "2" >> %temp%/test.txt
+REM Affichage du résultat
+
+START "" "[STARTDIR]Launch\VPXSTARTER.exe" 30 10 60 “Visual Pinball Player” 2
+
+set "EXE_PATH=C:\From Futur Application\ExctractHighscore.exe"
+set "ROM_PATH=C:\Visual Pinball\VPinMAME\nvram"
+cd /d "[DIREMU]"
+
+echo "3" >> %temp%/test.txt
+START "ExctractHighscore.exe" "%EXE_PATH%" "[GAMENAME]" "%result%"
+
+if "[RECMODE]"=="1" (
+START /min "" vpinballx.exe "[DIREMU]" -DisableTrueFullscreen -minimized -play "[GAMEFULLNAME]"
+) else (
+START /min "" vpinballx.exe "[DIREMU]" -minimized -play "[GAMEFULLNAME]"
+)
+exit /b
+
+:GetCurrentDate
+REM Récupérer la date du jour
+set "YEAR=%DATE:~6,4%"
+set "MONTH=%DATE:~3,2%"
+set "DAY=%DATE:~0,2%"
+set "HOUR=%TIME:~0,2%"
+set "MINUTE=%TIME:~3,2%"
+set "SECOND=%TIME:~6,2%"
+
+REM Définir la variable CURRENT_DATE au format log batch
+set "CURRENT_DATE=%YEAR%-%MONTH%-%DAY% %HOUR%:%MINUTE%:%SECOND%"
+
+exit /b
