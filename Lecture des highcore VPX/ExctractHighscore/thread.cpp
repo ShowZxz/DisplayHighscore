@@ -28,25 +28,29 @@ void Thread::run()
             {
 
                 openDatabaseConnection();
-                qDebug() << m_processName << "is not running.";
+                qDebug() << m_processName << "is not running...";
 
 
                 QString time_format = "MM-dd-yyyy";
                 QString _datetime=QDateTime::currentDateTime().toString(time_format);
                 QSqlQuery query(db);
-                query.prepare("INSERT INTO score (user, highscore, datetime,titre) VALUES (:user, :highscore, :_datetime, :titre )");
+                if (!m_title.isEmpty() ||!m_score.isEmpty() || !m_title.isEmpty()){
+                    query.prepare("INSERT INTO score (user, highscore, datetime,titre) VALUES (:user, :highscore, :_datetime, :titre )");
 
-                query.bindValue(":titre",m_title);
-                query.bindValue(":user",m_user);
-                query.bindValue(":highscore",m_score);
-                query.bindValue(":_datetime",_datetime);
+                    query.bindValue(":titre",m_title);
+                    query.bindValue(":user",m_user);
+                    query.bindValue(":highscore",m_score);
+                    query.bindValue(":_datetime",_datetime);
+
+                }
+
 
                 if (query.exec()){
                     qDebug() << "Les highscore sont inséré";
 
                 } else {
 
-                    qDebug() << "Echec de l'insertion";
+                    qDebug() << "Failed insert OR data empty";
 
              }
 
@@ -71,8 +75,9 @@ void Thread::run()
 
 void Thread::openDatabaseConnection()
 {
+    QString database_path= highscore.getDatabasePath() ;
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("C:/Database/Pinball/Scoreboard.db");
+    db.setDatabaseName(database_path);
 
     if (!db.open())
     {

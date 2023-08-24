@@ -2,6 +2,7 @@
 #define THREAD_H
 
 #include "sgdb.h"
+#include "highscore.h"
 #include <QThread>
 
 
@@ -21,7 +22,7 @@ private:
 
 
     Sgdb sgdb;
-
+    Highscore highscore;
     QSqlDatabase db;
     QDateTime * now;
     QString m_score;

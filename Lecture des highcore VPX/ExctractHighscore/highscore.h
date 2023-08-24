@@ -5,6 +5,7 @@
 #include <QString>
 #include <QSettings>
 
+
 class Highscore
 {
 public:
@@ -27,12 +28,15 @@ public:
 
        QString getPasswordFromConfig();
        QString getUsernameFromConfig();
+       QString getDatabasePath();
        QString getLeaderboardPath();
        QString getUserScorePath();
        int getToperScreen();
        QString getScore (){return score;}
        QString getTitle(){return titre;}
        QString getUser(){return user;}
+
+
 private:
        QString titre;
        QString score;

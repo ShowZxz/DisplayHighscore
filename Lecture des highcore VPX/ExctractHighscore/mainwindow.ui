@@ -58,7 +58,7 @@ background-attachment: fixed;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Title&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -66,10 +66,13 @@ background-attachment: fixed;
               <widget class="QLabel" name="label_namecab">
                <property name="styleSheet">
                 <string notr="true">background: transparent;
+font: 57 15pt &quot;Gotham Medium&quot;;
+
+
 </string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; color:#ffffff;&quot;&gt;YOUR HIGHSCORE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -93,7 +96,7 @@ background-attachment: fixed;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;not supported&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -116,7 +119,7 @@ background-attachment: fixed;
 border-radius: 25% 10%;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#000000;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;not supported&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::AutoText</enum>
@@ -149,7 +152,7 @@ border-radius: 25% 10%;</string>
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;not supported&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -159,7 +162,7 @@ border-radius: 25% 10%;</string>
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;not supported&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -183,7 +186,7 @@ border-radius: 25% 10%;</string>
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;not supported&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -193,7 +196,7 @@ border-radius: 25% 10%;</string>
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;not supported&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -239,17 +242,18 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Title&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QLabel" name="label_world_namecab">
                <property name="styleSheet">
-                <string notr="true">background: transparent;</string>
+                <string notr="true">background: transparent;
+font: 57 15pt &quot;Gotham Medium&quot;;</string>
                </property>
                <property name="text">
-                <string>House</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;WORLD WIDE HIGHSCORE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -279,7 +283,7 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>not supported</string>
                </property>
               </widget>
              </item>
@@ -289,7 +293,7 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>not supported</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -313,7 +317,7 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>not supported</string>
                </property>
               </widget>
              </item>
@@ -323,7 +327,7 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>not supported</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -347,7 +351,7 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>not supported</string>
                </property>
               </widget>
              </item>
@@ -357,7 +361,7 @@ background-size: cover;
                 <string notr="true">background: transparent;</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>not supported</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -115,6 +115,9 @@ public:
         label_namecab = new QLabel(frame);
         label_namecab->setObjectName(QString::fromUtf8("label_namecab"));
         label_namecab->setStyleSheet(QString::fromUtf8("background: transparent;\n"
+"font: 57 15pt \"Gotham Medium\";\n"
+"\n"
+"\n"
 ""));
         label_namecab->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
@@ -242,7 +245,8 @@ public:
 
         label_world_namecab = new QLabel(frame_2);
         label_world_namecab->setObjectName(QString::fromUtf8("label_world_namecab"));
-        label_world_namecab->setStyleSheet(QString::fromUtf8("background: transparent;"));
+        label_world_namecab->setStyleSheet(QString::fromUtf8("background: transparent;\n"
+"font: 57 15pt \"Gotham Medium\";"));
         label_world_namecab->setScaledContents(true);
         label_world_namecab->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         label_world_namecab->setWordWrap(false);
@@ -357,22 +361,22 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label_title->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">TextLabel</span></p></body></html>", nullptr));
-        label_namecab->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">TextLabel</span></p></body></html>", nullptr));
-        label_user1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">TextLabel</span></p></body></html>", nullptr));
-        label_high_user1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; color:#000000;\">TextLabel</span></p></body></html>", nullptr));
-        label_user2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">TextLabel</span></p></body></html>", nullptr));
-        label_high_user2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">TextLabel</span></p></body></html>", nullptr));
-        label_user3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">TextLabel</span></p></body></html>", nullptr));
-        label_high_user3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">TextLabel</span></p></body></html>", nullptr));
-        label_title_world->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">TextLabel</span></p></body></html>", nullptr));
-        label_world_namecab->setText(QCoreApplication::translate("MainWindow", "House", nullptr));
-        label_world1->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_world_score1->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_world2->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_world_score2->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_world3->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_world_score3->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_title->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">Title</span></p><p><br/></p></body></html>", nullptr));
+        label_namecab->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt; color:#ffffff;\">YOUR HIGHSCORE</span></p></body></html>", nullptr));
+        label_user1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>not supported</p></body></html>", nullptr));
+        label_high_user1->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>not supported</p></body></html>", nullptr));
+        label_user2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>not supported</p></body></html>", nullptr));
+        label_high_user2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>not supported</p></body></html>", nullptr));
+        label_user3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>not supported</p></body></html>", nullptr));
+        label_high_user3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>not supported</p></body></html>", nullptr));
+        label_title_world->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Title</p><p><br/></p></body></html>", nullptr));
+        label_world_namecab->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">WORLD WIDE HIGHSCORE</span></p></body></html>", nullptr));
+        label_world1->setText(QCoreApplication::translate("MainWindow", "not supported", nullptr));
+        label_world_score1->setText(QCoreApplication::translate("MainWindow", "not supported", nullptr));
+        label_world2->setText(QCoreApplication::translate("MainWindow", "not supported", nullptr));
+        label_world_score2->setText(QCoreApplication::translate("MainWindow", "not supported", nullptr));
+        label_world3->setText(QCoreApplication::translate("MainWindow", "not supported", nullptr));
+        label_world_score3->setText(QCoreApplication::translate("MainWindow", "not supported", nullptr));
         menuHighscore->setTitle(QCoreApplication::translate("MainWindow", "Highscore", nullptr));
     } // retranslateUi
 
