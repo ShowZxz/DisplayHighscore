@@ -11,7 +11,12 @@
 #include <QDebug>
 #include <QDateTime>
 
+#include "highscore.h"
 
+struct ScoreInfoTop {
+    QString username;
+    long long score;
+};
 class Sgdb
 {
 public:
@@ -19,14 +24,24 @@ public:
     ~Sgdb();
 
     bool databaseConnect();
+    bool openConnexion();
     void closeDatabase();
-    bool databaseRecordTitle(const QString& titre);
-    bool databaseRecordHighscore(const QString& user, const QString& highscore,const QString& titre);
-    void removeDuplicatesFromTable();
+
+
+
+
+    QString getInfoRank(const QString &user, const QString &title);
+    QString getNewHighscore(QString userName,QString title);
+    QList<ScoreInfoTop> getTopScoresInFronUser(const QString &title, const QString &user);
+    QList<ScoreInfoTop> getTopScoresBehindUser(const QString &title, const QString &user);
+    QList<ScoreInfoTop> getWorldScoreInfo(const QString &title);
+
+
 
 private:
     QSqlDatabase db;
     QDateTime * now;
+    Highscore highscore;
 
 
 };

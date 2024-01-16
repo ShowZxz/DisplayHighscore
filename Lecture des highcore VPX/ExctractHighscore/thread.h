@@ -11,9 +11,10 @@
 class Thread : public QThread
 {
 public:
-    Thread(const QString& processName, QString score, QString user,QString title);
+    Thread(const QString& processName, long long score, QString user,QString title,QString password);
     void run();
     void openDatabaseConnection();
+    void closeDatabaseConnection();
 
     Thread();
 
@@ -25,10 +26,11 @@ private:
     Highscore highscore;
     QSqlDatabase db;
     QDateTime * now;
-    QString m_score;
+    long long m_score;
     QString m_user;
     QString m_processName;
     QString m_title;
+    QString m_password;
 };
 
 #endif // THREAD_H

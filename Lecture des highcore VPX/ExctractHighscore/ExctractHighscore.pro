@@ -12,12 +12,14 @@ SOURCES += \
     highscore.cpp \
     main.cpp \
     mainwindow.cpp \
+    scoreboardmanager.cpp \
     sgdb.cpp \
     thread.cpp
 
 HEADERS += \
     highscore.h \
     mainwindow.h \
+    scoreboardmanager.h \
     sgdb.h \
     thread.h
 

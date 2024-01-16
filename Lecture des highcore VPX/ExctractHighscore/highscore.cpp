@@ -50,3 +50,19 @@ QString Highscore::getDatabasePath(){
     qDebug()<< settings.value("Database/data_path").toString();
 
 }
+QString Highscore::formatStringWithSpaces(const QString &input){
+    QString formattedString;
+        int count = 0;
+
+        for (int i = input.length() - 1; i >= 0; --i) {
+            formattedString.prepend(input.at(i));
+            count++;
+
+            if (count == 3 && i != 0) {
+                formattedString.prepend(" ");
+                count = 0;
+            }
+        }
+
+        return formattedString;
+}

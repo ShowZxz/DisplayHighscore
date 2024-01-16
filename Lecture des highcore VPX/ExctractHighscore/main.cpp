@@ -3,11 +3,17 @@
 #include "ui_mainwindow.h"
 #include "sgdb.h"
 #include "thread.h"
+#include "scoreboardmanager.h"
+#include "QLabel"
+
 #include <QApplication>
 #include <QDir>
 #include <QTextEdit>
 #include <QFileInfoList>
 #include <QFileInfo>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
 #include <QDebug>
 #include <QMessageBox>
 #include <iostream>
@@ -31,11 +37,10 @@ int main(int argc, char *argv[])
     //instanciation class Highscore
 //#############################################################################################################################################################
 Highscore high;
-Highscore high1;
-Highscore high2;
-Highscore high_world;
-Highscore high_world1;
-Highscore high_world2;
+
+Sgdb sgdb;
+ScoreboardManager scoreboardManager;
+
 
 
 QString vpinball = "VPinballX.exe";
@@ -57,6 +62,7 @@ QString vpinball = "VPinballX.exe";
 
 
     int numToperScreen =high.getToperScreen();
+    int toperSizeScreen;
 
     QString pinemhi_worldpath = high.getLeaderboardPath();
     QString pinemhi_userpath= high.getUserScorePath();
@@ -80,12 +86,10 @@ QString vpinball = "VPinballX.exe";
         if (screens.size() > numToperScreen) {
             QScreen* toperScreen = screens.at(numToperScreen);
 
-            // Afficher la fenêtre en plein écran sur le deuxième écran
-            w.setWindowState(Qt::WindowFullScreen);
-
 
             // Déplacez la fenêtre vers le deuxième écran
             w.move(toperScreen->geometry().x(), toperScreen->geometry().y());
+
         }
 
 
@@ -96,70 +100,75 @@ QString vpinball = "VPinballX.exe";
 
                                                                  //CONFIGURATION OF LABEL
 //#############################################################################################################################################################
-    QLabel * label_high_user1= ui.label_high_user1;
-    QLabel * label_high_user2= ui.label_high_user2;
-    QLabel * label_high_user3= ui.label_high_user3;
-    QLabel * label_user1= ui.label_user1;
-    QLabel * label_user2= ui.label_user2;
-    QLabel * label_user3= ui.label_user3;
-    QLabel * label_world1 = ui.label_world1;
-    QLabel * label_world2 = ui.label_world2;
-    QLabel * label_world3 = ui.label_world3;
-    QLabel * label_world_score1 = ui.label_world_score1;
-    QLabel * label_world_score2 = ui.label_world_score2;
-    QLabel * label_world_score3 = ui.label_world_score3;
+
+         /*
+        QLabel *label_RankForward2 = new QLabel("Mon highscore", &w);
+        label_RankForward2->setGeometry(350, 95, 250, 100);
 
 
-    //QLabel * label_namecab = ui.label_namecab;
+        QLabel *label_RankForward3 = new QLabel(" Top 1", &w);
+        label_RankForward3->setGeometry(850, 95, 250, 100);
+        */
 
-    QLabel * label_title = ui.label_title;
-    QLabel * label_title_world = ui.label_title_world;
-    //QFrame * frame=ui.frame;
-    //QFrame * frame_2=ui.frame_2;
+        QLabel *myBestScoreLabel = new QLabel("Votre texte ici", &w);
+        myBestScoreLabel->setGeometry(490, 420, 400, 110);
+        myBestScoreLabel->setAlignment(Qt::AlignCenter);
 
+        QLabel *worldRecordLabel = new QLabel("Votre texte ici", &w);
+        worldRecordLabel->setGeometry(490, 550, 400, 110);
+        worldRecordLabel->setAlignment(Qt::AlignCenter);
 
+        QLabel *topUserLabel = new QLabel("Votre texte ici", &w);
+        topUserLabel->setGeometry(1100, 425, 400, 110);
+        topUserLabel->setAlignment(Qt::AlignCenter);
 
+        QLabel *midUserLabel = new QLabel("Votre texte ici", &w);
+        midUserLabel->setGeometry(1100, 490, 400, 110);
+        midUserLabel->setAlignment(Qt::AlignCenter);
 
+        QLabel *botUserLabel = new QLabel("Votre texte ici", &w);
+        botUserLabel->setGeometry(1100, 555, 400, 110);
+        botUserLabel->setAlignment(Qt::AlignCenter);
 
+        QLabel *botRankLabel = new QLabel("100", &w);
+        botRankLabel->setGeometry(1490, 555, 50, 110);
+        botRankLabel->setAlignment(Qt::AlignCenter);
 
+        QLabel *midRankLabel = new QLabel("100", &w);
+        midRankLabel->setGeometry(1490, 485, 50, 110);
+        midRankLabel->setAlignment(Qt::AlignCenter);
 
-QString styleSheet = "font-size: 30px; color: white; font-weight: bold; background: transparent;";
-QString styleSheet2 = "font-size: 35px; color: white; font-weight: bold; background: transparent;";
+        QLabel *topRankLabel = new QLabel("100", &w);
+        topRankLabel->setGeometry(1490, 425, 50, 110);
+        topRankLabel->setAlignment(Qt::AlignCenter);
 
-label_high_user1->setStyleSheet(styleSheet);
-label_high_user2->setStyleSheet(styleSheet);
-label_high_user3->setStyleSheet(styleSheet);
-label_user1->setStyleSheet(styleSheet);
-label_user2->setStyleSheet(styleSheet);
-label_user3->setStyleSheet(styleSheet);
-label_world1->setStyleSheet(styleSheet);
-label_world2->setStyleSheet(styleSheet);
-label_world3->setStyleSheet(styleSheet);
-label_world_score1->setStyleSheet(styleSheet);
-label_world_score2->setStyleSheet(styleSheet);
-label_world_score3->setStyleSheet(styleSheet);
-label_title->setStyleSheet(styleSheet2);
-label_title_world->setStyleSheet(styleSheet2);
+        QLabel *myRankLabel = new QLabel("100", &w);
+        myRankLabel->setGeometry(870, 415, 50, 110);
+        myRankLabel->setAlignment(Qt::AlignCenter);
 
-
-
-label_title->setFont(QFont("Gotham Medium"));
-label_title_world->setFont(QFont("Gotham Medium"));
-label_high_user1->setFont(QFont("Gotham Medium"));
-label_high_user2->setFont(QFont("Gotham Medium"));
-label_high_user3->setFont(QFont("Gotham Medium"));
-label_user1->setFont(QFont("Gotham Medium"));
-label_user2->setFont(QFont("Gotham Medium"));
-label_user3->setFont(QFont("Gotham Medium"));
-label_world1->setFont(QFont("Gotham Medium"));
-label_world2->setFont(QFont("Gotham Medium"));
-label_world3->setFont(QFont("Gotham Medium"));
-label_world_score1->setFont(QFont("Gotham Medium"));
-label_world_score2->setFont(QFont("Gotham Medium"));
-label_world_score3->setFont(QFont("Gotham Medium"));
+        QLabel *worldRankLabel = new QLabel("1", &w);
+        worldRankLabel->setGeometry(870, 550, 50, 110);
+        worldRankLabel->setAlignment(Qt::AlignCenter);
 
 
 
+
+
+
+
+
+
+
+QString styleSheet = "font-size: 30px; color: red; font-weight: bold; background: transparent;";
+QString styleSheet2 = "font-size: 35px; color: red; font-weight: bold; background: transparent;";
+
+
+
+//label_RankForward2->setStyleSheet(styleSheet);
+//label_RankForward3->setStyleSheet(styleSheet);
+
+//label_RankForward2->setFont(QFont("Gotham Medium"));
+//label_RankForward3->setFont(QFont("Gotham Medium"));
 
 
 
@@ -170,17 +179,148 @@ label_world_score3->setFont(QFont("Gotham Medium"));
 
 
 
-            //QString name_NVRAM = "afm_113b.nv";
+            QString name_NVRAM = "afm_113b.nv";
             QString gameFullName = argv[1];
-            QString name_NVRAM = argv[2];
+            //QString name_NVRAM = argv[2];
+            gameFullName = "Attack from Mars (Bally 1995)";
 
             int pos = name_NVRAM.lastIndexOf(QChar('.'));
             QString nvram = name_NVRAM.left(pos)+".txt";
             qDebug() << nvram;
-            label_title->setText(gameFullName);
-            label_title_world->setText(gameFullName);
 
 
+
+            QString user = "Gold";  // Remplacez par l'utilisateur que vous recherchez
+            QString title = "Apex";  // Remplacez par le titre que vous recherchez
+
+
+
+
+               //QString bestScore = sgdb.getNewHighscore(username, gameFullName);
+
+               QString bestScore = sgdb.getNewHighscore(user, title);
+
+               if (!bestScore.isEmpty()) {
+                   qDebug() << "Meilleur score de l'utilisateur" << user << "pour le titre" << title << " : " << bestScore;
+                   QString bestScoreWithSpaces = high.formatStringWithSpaces(bestScore);
+                   high.setScore(bestScoreWithSpaces);
+
+               } else {
+                   qDebug() << "Aucun résultat trouvé. ( ## sgdb.getNewHighscore(user, title); ##) ";
+               }
+
+
+               QString scoreInfo = sgdb.getInfoRank(user, title);
+
+
+               if (!scoreInfo.isEmpty()) {
+                   qDebug() << "Score info str"<<scoreInfo;
+                   if (scoreInfo.length() >= 2) {
+
+                       QString strPosTop;
+                       QString strPosMid;
+                       QString strPosBottom;
+
+                       QString lastFirstChars= scoreInfo.right(1);
+                       int rank;
+                       rank = lastFirstChars.toInt();
+                       strPosMid = QString::number(rank);
+                       rank++;
+                       strPosTop = QString::number(rank);
+                       rank= rank - 2;
+                       strPosBottom = QString::number(rank);
+
+                       //Stock des ranks dans la class highscore
+                       high.settopRank(strPosTop);
+                       high.setmidRank(strPosMid);
+                       high.setbotRank(strPosBottom);
+
+
+
+                   } else {
+                       qDebug() << "La chaîne est trop courte pour avoir deux caractères.";
+                   }
+
+               } else {
+                   qDebug() << "Aucun résultat trouvé.";
+               }
+
+
+                   // USELESSS
+                   QString titleTest = "Apex";
+                   QString userTest = "Gold";
+
+                   QList<ScoreInfoTop> results_Front = sgdb.getTopScoresInFronUser(titleTest, userTest);
+
+                   QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(titleTest, userTest);
+                   QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(titleTest);
+
+
+                       for (const ScoreInfoTop &results_Behind : results_Behind) {
+
+                           qDebug() << "Utilisateur:" << results_Behind.username << "Score:" << results_Behind.score;
+                       }
+                       for (const ScoreInfoTop &results_Front : results_Front) {
+
+                           qDebug() << "Utilisateur:" << results_Front.username << "Score:" << results_Front.score;
+                       }
+                       for (const ScoreInfoTop &results_WorldScore : results_WorldScore) {
+
+                           qDebug() << "Utilisateur:" << results_WorldScore.username << "Score:" << results_WorldScore.score;
+                       }
+                       if (results_Behind.size() >= 1) {
+                           QString frontPosUser;
+
+                           QString behindPosUser;
+
+                           QString frontPosScore;
+
+                           QString behindPosScore;
+
+                           QString worldPosScore;
+
+                           QString worldPosUser;
+
+                           worldPosUser=results_WorldScore[0].username;
+                           frontPosUser=results_Front[0].username;
+                           behindPosUser=results_Behind[0].username;
+                           worldPosScore= high.formatStringWithSpaces(QString::number(results_WorldScore[0].score));
+                           frontPosScore= high.formatStringWithSpaces(QString::number(results_Behind[0].score));
+                           behindPosScore= high.formatStringWithSpaces(QString::number(results_Front[0].score));
+
+
+                           high.setworldPosScore(worldPosScore);
+                           high.setworldPosUser(worldPosUser);
+
+                           high.setfrontPosUser(frontPosUser);
+                           high.setfrontPosScore(frontPosScore);
+
+                           high.setbehindPosScore(behindPosScore);
+                           high.setbehindPosUser(behindPosUser);
+
+                           qDebug() << "Utilisateur:" <<frontPosUser;
+                           qDebug() << "Utilisateur:" <<behindPosUser;
+                           qDebug() << "Utilisateur:" <<worldPosUser;
+                           qDebug() << "Score:" << frontPosScore;
+                           qDebug() << "Score:" << behindPosScore;
+                           qDebug() << "Score:" << worldPosScore;
+                           }
+
+
+                                               // SETUP TEXT LABEL
+//######################################################################################################################################################
+
+            worldRecordLabel->setText(high.getworldPosScore());
+            myBestScoreLabel->setText(high.getScore());
+            topUserLabel->setText(high.getfrontPosScore());
+            botUserLabel->setText(high.getbehindPosScore());
+            midUserLabel->setText(high.getmidPosScore());
+
+
+            botRankLabel->setText(high.getbotRank());
+            midRankLabel->setText(high.getmidRank());
+            topRankLabel->setText(high.gettopRank());
+            myRankLabel->setText(high.getmidRank());
 
 
 
@@ -188,252 +328,75 @@ label_world_score3->setFont(QFont("Gotham Medium"));
             //LECTURE FICHIER HIGHSCORE DE L'USER
 //######################################################################################################################################################
 //QFile file2("C:/PINemHi/PINemHi LeaderBoard/TOP10_Personal/"+nvram);
-QFile file2(pinemhi_userpath+nvram);
+            nvram = "totan_14.txt";
+QFile file(pinemhi_userpath+nvram);
+
+if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream in(&file);
+            QString line;
 
 
-
-if (file2.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QTextStream in(&file2);
-    QString line;
-
-
-
-    // Recherche du highscore et de l'utilisateur à la ligne 7
-    int lineNumber = 0;
-    while (!in.atEnd()) {
-        QString line = in.readLine();
+            // Recherche du highscore et de l'utilisateur à la ligne 7
+            int lineNumber = 0;
+            while (!in.atEnd()) {
+                QString line = in.readLine();
 
 
-        lineNumber++;
-        //qDebug()<<lineNumber;
-        if (lineNumber == 7) {
-            QStringList parts = line.split(" ", QString::SkipEmptyParts);
-            //qDebug()<<line;
+                lineNumber++;
+                //qDebug()<<lineNumber;
+                if (lineNumber == 7) {
+                    QStringList parts = line.split(" ", Qt::SkipEmptyParts);
+                    //qDebug()<<line;
 
-            if (parts.size() >= 5) {
-                QString classement = parts.at(0);
-                QString highscore = parts.at(1);
-                QString user = parts.at(2);
-                QString date = parts.at(3);
-                QString heure = parts.at(4);
+                    if (parts.size() >= 5) {
 
-                //Stockage des variable dans la class Higscore
-                high.setScore(highscore);
-                high.setUser(user);
+                        QString highscore = parts.at(1);
+                        high.setScore(highscore);
 
-                //Affichage des variable sur les labels
-                label_high_user1->setText(highscore);
-                label_user1->setText(user);
-                label_user2->setText(user);
-                label_user3->setText(user);
+                        qDebug() << "Highscore:" << highscore;
+
+                    }
+
+                }
 
 
-                //sgdb.databaseRecordHighscore(user, highscore ,high.getTitle());
-
-
-            }
-        }
-        if (lineNumber == 8) {
-            QStringList parts = line.split(" ", QString::SkipEmptyParts);
-            //qDebug()<<line;
-
-            if (parts.size() >= 5) {
-                QString classement = parts.at(0);
-                QString highscore = parts.at(1);
-                QString user = parts.at(2);
-                QString date = parts.at(3);
-                QString heure = parts.at(4);
-                high1.setScore(highscore);
-                high1.setUser(user);
-                qDebug() << "Highscore:" << highscore;
-                qDebug() << "USER: " << user;
-
-
-
-                //Stockage des variable dans la class Highscore
-
-
-                //Affichage des variable sur les text edit
-                label_high_user2->setText(highscore);
-
-
-
-
-
-            }
-        }
-        if (lineNumber == 9) {
-            QStringList parts = line.split(" ", QString::SkipEmptyParts);
-            //qDebug()<<line;
-
-            if (parts.size() >= 5) {
-                QString classement = parts.at(0);
-                QString highscore = parts.at(1);
-                QString user = parts.at(2);
-                QString date = parts.at(3);
-                QString heure = parts.at(4);
-                qDebug() << "Highscore:" << highscore;
-                qDebug() << "USER: " << user;
-                high2.setScore(highscore);
-                high2.setUser(user);
-
-
-                //Stockage des variable dans la class Highscore
-
-
-                //Affichage des variable sur les text edit
-                label_high_user3->setText(highscore);
-
-
-
-                break;
-            }
-        }
-    }
-
-    file2.close();
-} else {
-    qDebug() << "Erreur lors de l'ouverture du fichier";
+            file.close();
 }
 
-                            //LECTURE HIGHSCORE WORLDWIDE
-//######################################################################################################################################################################
-  //QFile file3("C:/PINemHi/PINemHi LeaderBoard/TOP10_Best/"+nvram);
-  QFile file3(pinemhi_worldpath+nvram);
-
-  if (file3.open(QIODevice::ReadOnly | QIODevice::Text)) {
-      QTextStream in(&file3);
-      QString line;
-
-
-      // Recherche du highscore et de l'utilisateur à la ligne 7
-      int lineNumber = 0;
-      while (!in.atEnd()) {
-          QString line = in.readLine();
-
-
-          lineNumber++;
-          //qDebug()<<lineNumber;
-          if (lineNumber == 7) {
-              QStringList parts = line.split(" ", QString::SkipEmptyParts);
-              //qDebug()<<line;
-
-              if (parts.size() >= 5) {
-                  QString classement = parts.at(0);
-                  QString highscore = parts.at(1);
-                  QString user = parts.at(2);
-                  QString date = parts.at(3);
-                  QString heure = parts.at(4);
-                  label_world1->setText(user);
-                  label_world_score1->setText(highscore);
-                  high_world.setScore(highscore);
-                  high_world.setScore(user);
-
-
-                  qDebug() << "Highscore:" << highscore;
-                  qDebug() << "USER: " << user;
-
-
-
-              }
-
-          }
-
-          if (lineNumber == 8) {
-              QStringList parts = line.split(" ", QString::SkipEmptyParts);
-              //qDebug()<<line;
-
-              if (parts.size() >= 5) {
-                  QString classement = parts.at(0);
-                  QString highscore = parts.at(1);
-                  QString user = parts.at(2);
-                  QString date = parts.at(3);
-                  QString heure = parts.at(4);
-                  qDebug() << "Highscore:" << highscore;
-                  qDebug() << "USER: " << user;
-                  high_world1.setScore(highscore);
-                  high_world1.setScore(user);
-
-
-
-                  //Stockage des variable dans la class Highscore
-
-
-                  //Affichage des variable sur les text edit
-                  label_world2->setText(user);
-                  label_world_score2->setText(highscore);
+}
+            else {
+            qDebug() << "Erreur lors de l'ouverture du fichier";
+}
 
 
 
 
-
-              }
-          }
-
-          if (lineNumber == 9) {
-              QStringList parts = line.split(" ", QString::SkipEmptyParts);
-              //qDebug()<<line;
-
-              if (parts.size() >= 5) {
-                  QString classement = parts.at(0);
-                  QString highscore = parts.at(1);
-                  QString user = parts.at(2);
-                  QString date = parts.at(3);
-                  QString heure = parts.at(4);
-                  high_world2.setScore(highscore);
-                  high_world2.setScore(user);
-                  qDebug() << "Highscore:" << highscore;
-                  qDebug() << "USER: " << user;
-
-
-                  //Stockage des variable dans la class Highscore
-
-
-                  //Affichage des variable sur les text edit
-                  label_world3->setText(user);
-                  label_world_score3->setText(highscore);
-
-
-
-                  break;
-              }
-          }
-
-
-      }
-
-
-      file3.close();
-  } else {
-      qDebug() << "Erreur lors de l'ouverture du fichier";
-  }
-
-
-
-
-
-
-w.show();
 
                                                             //Record highscore when end
 //#############################################################################################################################################################
 
 
-Thread thread(vpinball,high.getScore(),high.getUser(),gameFullName);
+
+
+
+//long long y = 856833300;
+QString s="345.455.600";
+s.replace(".","");
+long long myLongLong = s.toLongLong();
+
+
+qDebug()<< myLongLong << "  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+QString u="Gold";
+QString g="Apex";
+QString p="lol";
+//Thread thread(vpinball,high.getScore(),high.getUser(),gameFullName,high.getPasswordFromConfig());
+Thread thread(vpinball,myLongLong,u,g,p);
 
 thread.start();
 
 
-
-
-
-
-
-
-
-
-
-
+//w.showFullScreen();
+w.showMaximized();
 return a.exec();
 }
 

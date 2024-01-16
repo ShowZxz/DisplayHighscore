@@ -6,4 +6,7 @@
         <file>img/comics_background.jpg</file>
     </qresource>
     <qresource prefix="/new/prefix1"/>
+    <qresource prefix="/">
+        <file>Score.png</file>
+    </qresource>
 </RCC>
