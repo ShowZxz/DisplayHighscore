@@ -11,9 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,8 +22,8 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QLabel *label;
-    QMenuBar *menubar;
+    QGridLayout *gridLayout_2;
+    QGraphicsView *graphicsView;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -31,25 +31,19 @@ public:
             MainWindow->setObjectName("MainWindow");
         MainWindow->resize(1020, 651);
         MainWindow->setAutoFillBackground(false);
-        MainWindow->setStyleSheet(QString::fromUtf8("border-image: url(:/Score.png);\n"
-"\n"
-"background-color: transparent;\n"
-"background-position: center;\n"
-"background-repeat: no-repeat;\n"
-"\n"
-""));
+        MainWindow->setStyleSheet(QString::fromUtf8(""));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         centralwidget->setStyleSheet(QString::fromUtf8(""));
-        label = new QLabel(centralwidget);
-        label->setObjectName("label");
-        label->setGeometry(QRect(330, 65, 271, 61));
-        label->setStyleSheet(QString::fromUtf8("background: transparent;"));
+        gridLayout_2 = new QGridLayout(centralwidget);
+        gridLayout_2->setObjectName("gridLayout_2");
+        graphicsView = new QGraphicsView(centralwidget);
+        graphicsView->setObjectName("graphicsView");
+        graphicsView->setStyleSheet(QString::fromUtf8("border-image: url(:/Score.png);"));
+
+        gridLayout_2->addWidget(graphicsView, 0, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1020, 21));
-        MainWindow->setMenuBar(menubar);
 
         retranslateUi(MainWindow);
 
@@ -59,7 +53,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

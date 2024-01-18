@@ -75,12 +75,14 @@ public:
 
        QString getfrontPosUser(){return frontPosUser;}
        QString getbehindPosUser(){return behindPosUser;}
+       QString getworldPosUser(){return worldPosUser;}
+       QString getmidPosUser(){return midPosUser;}
+
+       QString getmidPosScore(){return midPosScore;}
+       QString getworldPosScore(){return worldPosScore;}
        QString getfrontPosScore(){return frontPosScore;}
        QString getbehindPosScore(){return behindPosScore;}
-       QString getworldPosScore(){return worldPosScore;}
-       QString getworldPosUser(){return worldPosUser;}
-       QString getmidPosScore(){return midPosScore;}
-       QString getmidPosUser(){return midPosUser;}
+
        QString gettopRank(){return topRank;}
        QString getmidRank(){return midRank;}
        QString getbotRank(){return botRank;}
@@ -106,6 +108,11 @@ private:
        QString topRank;
        QString midRank;
        QString botRank;
+
+       QString myName;
+       QString topNameUser;
+       QString midNameUser;
+       QString botNameUser;
 
 };
 
