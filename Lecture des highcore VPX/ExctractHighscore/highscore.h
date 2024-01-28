@@ -66,6 +66,7 @@ public:
        QString getDatabasePath();
        QString getLeaderboardPath();
        QString getUserScorePath();
+       QString getTypeOfScreen();
 
        int getToperScreen();
 

@@ -58,21 +58,34 @@ QString vpinball = "VPinballX.exe";
 
 
     int numToperScreen =high.getToperScreen();
-    int toperSizeScreen;
+    QString typeOfScreen = high.getTypeOfScreen();
 
     QString pinemhi_worldpath = high.getLeaderboardPath();
     QString pinemhi_userpath= high.getUserScorePath();
     QString username = high.getUsernameFromConfig();
     QString password = high.getPasswordFromConfig();
     qDebug()<< numToperScreen;
-    qDebug()<< password +" //// "+username +"W "+pinemhi_userpath+" W "+pinemhi_worldpath;
+    qDebug()<< password +" //// "+username +" W "+pinemhi_userpath+" W "+pinemhi_worldpath;
 
 
     //VERIFY PASSWORD AND USERNAME HERE
-    if (username.isEmpty() || password.isEmpty()) {
-            QMessageBox::critical(nullptr, "Erreur", "Nom d'utilisateur ou mot de passe manquant dans le fichier de configuration.");
-            return 1; // Quitter l'application avec un code d'erreur
+
+    if (!username.isEmpty() || !password.isEmpty()) {
+        QList<LoginUser> resultLogin = sgdb.getLoginUser(username, password);
+
+        if (resultLogin.isEmpty()) {
+            QMessageBox::critical(nullptr, "Erreur", "Nom d'utilisateur ou mot de passe différent que celui de l'inscription.");
+                return 1;
         }
+
+        qDebug() << "PSEUDO : " << resultLogin[0].pseudo << "CODE : " << resultLogin[0].code;
+
+        if (resultLogin[0].pseudo != username || resultLogin[0].code != password) {
+            QMessageBox::critical(nullptr, "Erreur", "Nom d'utilisateur ou mot de passe différent que celui de l'inscription.");
+                return 1;
+        }
+    }
+
 
                                                            //CONFIGURATION OF SCREEN
 //############################################################################################################################################################
@@ -93,90 +106,192 @@ QString vpinball = "VPinballX.exe";
                                                                  //CONFIGURATION OF LABEL
 //#############################################################################################################################################################
 
+        QString styleSheetNumber;
+        QString styleSheetName;
+        QString styleSheetRank;
 
+        QLabel *myBestScoreLabel;
+        QLabel *worldRecordLabel;
+        QLabel *topScoreLabel;
+        QLabel *midScoreLabel;
+        QLabel *botScoreLabel;
+        QLabel *midRankLabel;
+        QLabel *botRankLabel;
+        QLabel *topRankLabel;
+        QLabel *myRankLabel;
+        QLabel *worldRankLabel;
+        QLabel *myName;
+        QLabel *worldName;
+        QLabel *topName;
+        QLabel *botName;
+        QLabel *midName;
 
-        QString styleSheetNumber = "font-size: 30px; color: red; font-weight: bold; background: transparent; border: none;";
-        QString styleSheetName = "font-size: 15px; color: red; font-weight: bold; background: transparent; border: none;";
-        QString styleSheetRank = "font-size: 15px; color: red; font-weight: bold; background: transparent; border: none;";
-        //if (high.getSizeScreen = "toper")
-        QLabel *myBestScoreLabel = new QLabel("100000000000", &w);
-        myBestScoreLabel->setGeometry(530, 420, 400, 110);
-        myBestScoreLabel->setAlignment(Qt::AlignCenter);
+        if (typeOfScreen == "toper") {
+            styleSheetNumber = "font-size: 20px; color: red; font-weight: bold; background: transparent; border: none;";
+            styleSheetName = "font-size: 10px; color: red; font-weight: bold; background: transparent; border: none;";
+            styleSheetRank = "font-size: 15px; color: red; font-weight: bold; background: transparent; border: none;";
 
-        QLabel *worldRecordLabel = new QLabel("100000000000", &w);
-        worldRecordLabel->setGeometry(530, 550, 400, 110);
-        worldRecordLabel->setAlignment(Qt::AlignCenter);
+            myBestScoreLabel = new QLabel("100 000 000 000", &w);
+            myBestScoreLabel->setGeometry(290, 260, 400, 110);
+            myBestScoreLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *topScoreLabel = new QLabel("100000000000", &w);
-        topScoreLabel->setGeometry(1150, 420, 400, 110);
-        topScoreLabel->setAlignment(Qt::AlignCenter);
+            worldRecordLabel = new QLabel("100 000 000 000", &w);
+            worldRecordLabel->setGeometry(290, 345, 400, 110);
+            worldRecordLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *midScoreLabel = new QLabel("100000000000", &w);
-        midScoreLabel->setGeometry(1150, 490, 400, 110);
-        midScoreLabel->setAlignment(Qt::AlignCenter);
+            topScoreLabel = new QLabel("100 000 000 000", &w);
+            topScoreLabel->setGeometry(700, 265, 400, 110);
+            topScoreLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *botScoreLabel = new QLabel("100000000000", &w);
-        botScoreLabel->setGeometry(1150, 555, 400, 110);
-        botScoreLabel->setAlignment(Qt::AlignCenter);
+            midScoreLabel = new QLabel("100000000000", &w);
+            midScoreLabel->setGeometry(700, 305, 400, 110);
+            midScoreLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *botRankLabel = new QLabel("100", &w);
-        botRankLabel->setGeometry(1480, 550, 50, 110);
-        botRankLabel->setAlignment(Qt::AlignCenter);
+            botScoreLabel = new QLabel("100000000000", &w);
+            botScoreLabel->setGeometry(700, 350, 400, 110);
+            botScoreLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *midRankLabel = new QLabel("100", &w);
-        midRankLabel->setGeometry(1480, 490, 50, 110);
-        midRankLabel->setAlignment(Qt::AlignCenter);
+            botRankLabel = new QLabel("3", &w);
+            botRankLabel->setGeometry(975, 350, 50, 110);
+            botRankLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *topRankLabel = new QLabel("100", &w);
-        topRankLabel->setGeometry(1480, 420, 50, 110);
-        topRankLabel->setAlignment(Qt::AlignCenter);
+            midRankLabel = new QLabel("2", &w);
+            midRankLabel->setGeometry(975, 305, 50, 110);
+            midRankLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *myRankLabel = new QLabel("100", &w);
-        myRankLabel->setGeometry(870, 415, 50, 110);
-        myRankLabel->setAlignment(Qt::AlignCenter);
+            topRankLabel = new QLabel("1", &w);
+            topRankLabel->setGeometry(975, 265, 50, 110);
+            topRankLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *worldRankLabel = new QLabel("1", &w);
-        worldRankLabel->setGeometry(870, 550, 50, 110);
-        worldRankLabel->setAlignment(Qt::AlignCenter);
+            myRankLabel = new QLabel("100", &w);
+            myRankLabel->setGeometry(570, 260, 50, 110);
+            myRankLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *myName = new QLabel("COUCOU C MOI", &w);
-        myName->setGeometry(350, 410, 400, 110);
-        myName->setAlignment(Qt::AlignCenter);
+            worldRankLabel = new QLabel("1", &w);
+            worldRankLabel->setGeometry(570, 345, 50, 110);
+            worldRankLabel->setAlignment(Qt::AlignCenter);
 
-        QLabel *worldName = new QLabel("LE MEILLEUR", &w);
-        worldName->setGeometry(380, 530, 400, 110);
-        worldName->setAlignment(Qt::AlignCenter);
+            myName = new QLabel("COUCOU C MOI", &w);
+            myName->setGeometry(170, 250, 400, 110);
+            myName->setAlignment(Qt::AlignCenter);
 
-        QLabel *topName = new QLabel("C++ QTCREATOR", &w);
-        topName->setGeometry(960, 415, 400, 110);
-        topName->setAlignment(Qt::AlignCenter);
+            worldName = new QLabel("LE MEILLEUR", &w);
+            worldName->setGeometry(170, 335, 400, 110);
+            worldName->setAlignment(Qt::AlignCenter);
 
-        QLabel *midName = new QLabel( &w);
-        midName->setGeometry(960, 480, 400, 110);
-        midName->setAlignment(Qt::AlignCenter);
+            topName = new QLabel("C++ QTCREATOR", &w);
+            topName->setGeometry(550, 255, 400, 110);
+            topName->setAlignment(Qt::AlignCenter);
 
-        QLabel *botName = new QLabel("THE MONSTER", &w);
-        botName->setGeometry(960, 540, 400, 110);
-        botName->setAlignment(Qt::AlignCenter);
+            midName = new QLabel( "THE GRINDER",&w);
+            midName->setGeometry(550, 300, 400, 110);
+            midName->setAlignment(Qt::AlignCenter);
 
-        myBestScoreLabel->setStyleSheet(styleSheetNumber);
-        worldRecordLabel->setStyleSheet(styleSheetNumber);
-        topScoreLabel->setStyleSheet(styleSheetNumber);
-        midScoreLabel->setStyleSheet(styleSheetNumber);
-        botScoreLabel->setStyleSheet(styleSheetNumber);
+            botName = new QLabel("THE MONSTER", &w);
+            botName->setGeometry(550, 340, 400, 110);
+            botName->setAlignment(Qt::AlignCenter);
+            myBestScoreLabel->setStyleSheet(styleSheetNumber);
+            worldRecordLabel->setStyleSheet(styleSheetNumber);
+            topScoreLabel->setStyleSheet(styleSheetNumber);
+            midScoreLabel->setStyleSheet(styleSheetNumber);
+            botScoreLabel->setStyleSheet(styleSheetNumber);
 
-        myRankLabel->setStyleSheet(styleSheetRank);
-        botRankLabel->setStyleSheet(styleSheetRank);
-        midRankLabel->setStyleSheet(styleSheetRank);
-        topRankLabel->setStyleSheet(styleSheetRank);
-        worldRankLabel->setStyleSheet(styleSheetRank);
+            myRankLabel->setStyleSheet(styleSheetRank);
+            botRankLabel->setStyleSheet(styleSheetRank);
+            midRankLabel->setStyleSheet(styleSheetRank);
+            topRankLabel->setStyleSheet(styleSheetRank);
+            worldRankLabel->setStyleSheet(styleSheetRank);
 
-        myName->setStyleSheet(styleSheetName);
-        worldName->setStyleSheet(styleSheetName);
-        botName->setStyleSheet(styleSheetName);
-        midName->setStyleSheet(styleSheetName);
-        topName->setStyleSheet(styleSheetName);
+            myName->setStyleSheet(styleSheetName);
+            worldName->setStyleSheet(styleSheetName);
+            botName->setStyleSheet(styleSheetName);
+            midName->setStyleSheet(styleSheetName);
+            topName->setStyleSheet(styleSheetName);
 
+        } else {
+            styleSheetNumber = "font-size: 30px; color: red; font-weight: bold; background: transparent; border: none;";
+            styleSheetName = "font-size: 15px; color: red; font-weight: bold; background: transparent; border: none;";
+            styleSheetRank = "font-size: 15px; color: red; font-weight: bold; background: transparent; border: none;";
+
+            myBestScoreLabel = new QLabel("100000000000", &w);
+            myBestScoreLabel->setGeometry(530, 420, 400, 110);
+            myBestScoreLabel->setAlignment(Qt::AlignCenter);
+            myBestScoreLabel->setStyleSheet(styleSheetNumber);
+
+            worldRecordLabel = new QLabel("100000000000", &w);
+            worldRecordLabel->setGeometry(530, 550, 400, 110);
+            worldRecordLabel->setAlignment(Qt::AlignCenter);
+
+            topScoreLabel = new QLabel("100000000000", &w);
+            topScoreLabel->setGeometry(1150, 420, 400, 110);
+            topScoreLabel->setAlignment(Qt::AlignCenter);
+
+            midScoreLabel = new QLabel("100000000000", &w);
+            midScoreLabel->setGeometry(1150, 490, 400, 110);
+            midScoreLabel->setAlignment(Qt::AlignCenter);
+
+            botScoreLabel = new QLabel("100000000000", &w);
+            botScoreLabel->setGeometry(1150, 555, 400, 110);
+            botScoreLabel->setAlignment(Qt::AlignCenter);
+
+            botRankLabel = new QLabel("100", &w);
+            botRankLabel->setGeometry(1480, 550, 50, 110);
+            botRankLabel->setAlignment(Qt::AlignCenter);
+
+            midRankLabel = new QLabel("100", &w);
+            midRankLabel->setGeometry(1480, 490, 50, 110);
+            midRankLabel->setAlignment(Qt::AlignCenter);
+
+            topRankLabel = new QLabel("100", &w);
+            topRankLabel->setGeometry(1480, 420, 50, 110);
+            topRankLabel->setAlignment(Qt::AlignCenter);
+
+            myRankLabel = new QLabel("100", &w);
+            myRankLabel->setGeometry(870, 415, 50, 110);
+            myRankLabel->setAlignment(Qt::AlignCenter);
+
+            worldRankLabel = new QLabel("1", &w);
+            worldRankLabel->setGeometry(870, 550, 50, 110);
+            worldRankLabel->setAlignment(Qt::AlignCenter);
+
+            myName = new QLabel("COUCOU C MOI", &w);
+            myName->setGeometry(350, 410, 400, 110);
+            myName->setAlignment(Qt::AlignCenter);
+
+            worldName = new QLabel("LE MEILLEUR", &w);
+            worldName->setGeometry(380, 530, 400, 110);
+            worldName->setAlignment(Qt::AlignCenter);
+
+            topName = new QLabel("C++ QTCREATOR", &w);
+            topName->setGeometry(960, 415, 400, 110);
+            topName->setAlignment(Qt::AlignCenter);
+
+            midName = new QLabel( &w);
+            midName->setGeometry(960, 480, 400, 110);
+            midName->setAlignment(Qt::AlignCenter);
+
+            botName = new QLabel("THE MONSTER", &w);
+            botName->setGeometry(960, 540, 400, 110);
+            botName->setAlignment(Qt::AlignCenter);
+
+            myBestScoreLabel->setStyleSheet(styleSheetNumber);
+            worldRecordLabel->setStyleSheet(styleSheetNumber);
+            topScoreLabel->setStyleSheet(styleSheetNumber);
+            midScoreLabel->setStyleSheet(styleSheetNumber);
+            botScoreLabel->setStyleSheet(styleSheetNumber);
+
+            myRankLabel->setStyleSheet(styleSheetRank);
+            botRankLabel->setStyleSheet(styleSheetRank);
+            midRankLabel->setStyleSheet(styleSheetRank);
+            topRankLabel->setStyleSheet(styleSheetRank);
+            worldRankLabel->setStyleSheet(styleSheetRank);
+
+            myName->setStyleSheet(styleSheetName);
+            worldName->setStyleSheet(styleSheetName);
+            botName->setStyleSheet(styleSheetName);
+            midName->setStyleSheet(styleSheetName);
+            topName->setStyleSheet(styleSheetName);
+        }
 
 
 
@@ -203,14 +318,13 @@ QString vpinball = "VPinballX.exe";
 
 
 
-            QString user = "Gold";  // Remplacez par l'utilisateur que vous recherchez
-            QString title = "Apex";  // Remplacez par le titre que vous recherchez
+            QString user = "Gold";
+            QString title = "Apex";
 
 
 
 
                //QString bestScore = sgdb.getNewHighscore(username, gameFullName);
-
                QString bestScore = sgdb.getNewHighscore(user, title);
                bestScore = high.formatStringWithSpaces(bestScore);
                //qDebug() << bestScore << "Le best Score ";
@@ -224,7 +338,7 @@ QString vpinball = "VPinballX.exe";
                    qDebug() << "Aucun résultat trouvé. ( ## sgdb.getNewHighscore(user, title); ##) ";
                }
 
-
+               //QString scoreInfo = sgdb.getInfoRank(username,gameFullName)
                QString scoreInfo = sgdb.getInfoRank(user, title);
 
 
@@ -273,6 +387,11 @@ QString vpinball = "VPinballX.exe";
 
                    QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(titleTest, userTest);
                    QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(titleTest);
+
+                   //QList<ScoreInfoTop> results_Front = sgdb.getTopScoresInFronUser(gameFullName, username);
+
+                   //QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(gameFullName, username);
+                   //QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(gameFullName);
 
 
                        for (const ScoreInfoTop &results_Behind : results_Behind) {
@@ -328,15 +447,18 @@ QString vpinball = "VPinballX.exe";
 
                                                // SETUP TEXT LABEL
 //######################################################################################################################################################
+            myBestScoreLabel->setText(high.getScore());
+
 
             worldRecordLabel->setText(high.getworldPosScore());
-            myBestScoreLabel->setText(high.getScore());
+
             topScoreLabel->setText(high.getfrontPosScore());
             botScoreLabel->setText(high.getbehindPosScore());
             midScoreLabel->setText(bestScore);
 
             worldName->setText(high.getworldPosUser());
             myName->setText(high.getUsernameFromConfig());
+
             topName->setText(high.getfrontPosUser());
             midName->setText(high.getUsernameFromConfig());
             botName->setText(high.getbehindPosUser());
@@ -351,9 +473,10 @@ QString vpinball = "VPinballX.exe";
 
 
 
+
             //LECTURE FICHIER HIGHSCORE DE L'USER
 //######################################################################################################################################################
-//QFile file2("C:/PINemHi/PINemHi LeaderBoard/TOP10_Personal/"+nvram);
+//QFile file("pinemhi_userpath+nvram);
             nvram = "totan_14.txt";
 QFile file(pinemhi_userpath+nvram);
 
@@ -402,23 +525,14 @@ if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 //#############################################################################################################################################################
 
 
+//QString thread_score=high.getScore();
+//thread_score.replace(".","");
+//long long long_thread_score = thread_score.toLongLong();
+//qDebug()<< long_thread_score << "  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+//Thread thread(vpinball,long_thread_score,high.getUser(),gameFullName,high.getPasswordFromConfig());
+//Thread thread(vpinball,myLongLong,u,g,p);
 
-
-
-//long long y = 856833300;
-QString s="345.455.600";
-s.replace(".","");
-long long myLongLong = s.toLongLong();
-
-
-qDebug()<< myLongLong << "  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
-QString u="Gold";
-QString g="Apex";
-QString p="lol";
-//Thread thread(vpinball,high.getScore(),high.getUser(),gameFullName,high.getPasswordFromConfig());
-Thread thread(vpinball,myLongLong,u,g,p);
-
-thread.start();
+//thread.start();
 
 
 w.showFullScreen();

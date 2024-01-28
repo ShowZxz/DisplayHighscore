@@ -25,6 +25,40 @@ bool Sgdb::openConnexion(){
     }
 }
 
+QList<LoginUser> Sgdb::getLoginUser(const QString &pseudo, const QString &code) {
+    QList<LoginUser> result;
+
+    if (!db.open()) {
+        qDebug() << "Erreur lors de l'ouverture de la base de données";
+        // Vous pourriez renvoyer une liste vide ou signaler l'erreur d'une autre manière.
+        return result;
+    }
+
+    qDebug() << "Ouverture de la base de données SDGB.";
+
+    QString queryStr = "SELECT Pseudo, Code FROM utilisateurs WHERE Pseudo = :pseudo AND Code = :code;";
+    QSqlQuery query;
+
+    query.prepare(queryStr);
+    query.bindValue(":pseudo", pseudo);
+    query.bindValue(":code", code);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+        // Vous pourriez renvoyer une liste vide ou signaler l'erreur d'une autre manière.
+        return result;
+    }
+
+    if (query.next()) {
+        LoginUser loginUser;
+        loginUser.pseudo = query.value(0).toString();
+        loginUser.code = query.value(1).toString();
+        result.append(loginUser);
+    }
+
+    return result;
+}
+
 
 
 QString Sgdb::getInfoRank(const QString &user, const QString &title){

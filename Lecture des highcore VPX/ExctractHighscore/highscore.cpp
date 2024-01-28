@@ -66,3 +66,10 @@ QString Highscore::formatStringWithSpaces(const QString &input){
 
         return formattedString;
 }
+
+QString Highscore::getTypeOfScreen(){
+        QSettings settings("C:/From Futur Application/config/path.ini", QSettings::IniFormat);
+        return settings.value("SCALE/size_screen").toString();
+        qDebug()<< settings.value("SCALE/size_screen").toString();
+
+}

@@ -17,6 +17,14 @@ struct ScoreInfoTop {
     QString username;
     long long score;
 };
+
+struct LoginUser{
+    QString pseudo;
+    QString code;
+};
+
+
+
 class Sgdb
 {
 public:
@@ -32,6 +40,7 @@ public:
 
     QString getInfoRank(const QString &user, const QString &title);
     QString getNewHighscore(QString userName,QString title);
+    QList<LoginUser> getLoginUser(const QString &pseudo, const QString &code);
     QList<ScoreInfoTop> getTopScoresInFronUser(const QString &title, const QString &user);
     QList<ScoreInfoTop> getTopScoresBehindUser(const QString &title, const QString &user);
     QList<ScoreInfoTop> getWorldScoreInfo(const QString &title);
