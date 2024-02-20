@@ -12,11 +12,11 @@ Sgdb::Sgdb(){
 
 bool Sgdb::openConnexion(){
     db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("127.0.0.1");
+    db.setHostName("-");
     db.setPort(3306);
-    db.setDatabaseName("scoring_manager");
-    db.setUserName("root");
-    db.setPassword("");
+    db.setDatabaseName("-");
+    db.setUserName("-");
+    db.setPassword("-");
     if (db.open()) {
         return true;
     } else {

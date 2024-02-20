@@ -17,9 +17,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-
-</string>
+   <string notr="true">background: transparent;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -29,7 +27,8 @@
     <item row="0" column="0">
      <widget class="QGraphicsView" name="graphicsView">
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/Score.png);</string>
+       <string notr="true">border-image: url(:/Score.png);
+background: transparent;</string>
       </property>
      </widget>
     </item>

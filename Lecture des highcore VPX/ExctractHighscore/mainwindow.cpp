@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "highscore.h"
+
 #include "QLabel"
 
 #include <QApplication>

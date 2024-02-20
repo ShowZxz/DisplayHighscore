@@ -95,6 +95,22 @@ void Thread::run()
 
 
                 sgdb.closeDatabase();
+
+
+
+                QString exePath = "Front.exe";
+
+                // Créer un objet QProcess
+                QProcess *process = new QProcess();
+
+                // Démarrer le processus
+                process->start(exePath);
+
+                // Libérer la mémoire du QProcess
+                delete process;
+
+                QCoreApplication::quit();
+
                 break;
             }
         }
@@ -112,11 +128,11 @@ void Thread::run()
 void Thread::openDatabaseConnection()
 {
     db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("127.0.0.1");
+    db.setHostName("-");
     db.setPort(3306);
-    db.setDatabaseName("scoring_manager");
-    db.setUserName("root");
-    db.setPassword("");
+    db.setDatabaseName("-");
+    db.setUserName("-");
+    db.setPassword("-");
     if (db.open()) {
          qDebug() << "base de données thread ok :";
     } else {

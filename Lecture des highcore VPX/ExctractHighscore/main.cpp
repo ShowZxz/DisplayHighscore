@@ -1,11 +1,12 @@
 #include "mainwindow.h"
 #include "highscore.h"
+#include "thread.h"
 #include "ui_mainwindow.h"
 #include "sgdb.h"
-#include "thread.h"
-#include "scoreboardmanager.h"
+
 #include "QLabel"
 
+#include <QCoreApplication>
 #include <QApplication>
 #include <QDir>
 #include <QTextEdit>
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
 //#############################################################################################################################################################
 Highscore high;
 Sgdb sgdb;
-ScoreboardManager scoreboardManager;
+
 QString vpinball = "VPinballX.exe";
 
 
@@ -101,7 +102,33 @@ QString vpinball = "VPinballX.exe";
 
         }
 
+        QString processName = "Front.exe";
 
+
+        QProcess *process = new QProcess();
+
+
+        QStringList processList = process->systemEnvironment();
+        processList << "tasklist";
+
+
+        process->start("tasklist");
+
+        process->waitForFinished(-1);
+
+
+        QString tasklistOutput = process->readAllStandardOutput();
+
+        if (tasklistOutput.contains(processName)) {
+
+            QProcess::execute("taskkill", QStringList() << "/F" << "/IM" << processName);
+        } else {
+
+            qDebug() << "Le processus" << processName << "n'est pas en cours d'exécution.";
+        }
+
+
+        delete process;
 
                                                                  //CONFIGURATION OF LABEL
 //#############################################################################################################################################################
@@ -307,10 +334,10 @@ QString vpinball = "VPinballX.exe";
 
 
 
-            QString name_NVRAM = "afm_113b.nv";
+            //QString name_NVRAM = "afm_113b.nv";
             QString gameFullName = argv[1];
-            //QString name_NVRAM = argv[2];
-            gameFullName = "Attack from Mars (Bally 1995)";
+            QString name_NVRAM = argv[2];
+            //gameFullName = "Attack from Mars (Bally 1995)";
 
             int pos = name_NVRAM.lastIndexOf(QChar('.'));
             QString nvram = name_NVRAM.left(pos)+".txt";
@@ -318,19 +345,19 @@ QString vpinball = "VPinballX.exe";
 
 
 
-            QString user = "Gold";
-            QString title = "Apex";
+            //QString user = "Gold";
+            //QString title = "Apex";
 
 
 
 
-               //QString bestScore = sgdb.getNewHighscore(username, gameFullName);
-               QString bestScore = sgdb.getNewHighscore(user, title);
+               QString bestScore = sgdb.getNewHighscore(username, gameFullName);
+               //QString bestScore = sgdb.getNewHighscore(user, title);
                bestScore = high.formatStringWithSpaces(bestScore);
                //qDebug() << bestScore << "Le best Score ";
 
                if (!bestScore.isEmpty()) {
-                   qDebug() << "Meilleur score de l'utilisateur" << user << "pour le titre" << title << " : " << bestScore;
+                   //qDebug() << "Meilleur score de l'utilisateur" << user << "pour le titre" << title << " : " << bestScore;
                    QString bestScoreWithSpaces = high.formatStringWithSpaces(bestScore);
                    high.setScore(bestScoreWithSpaces);
 
@@ -338,8 +365,8 @@ QString vpinball = "VPinballX.exe";
                    qDebug() << "Aucun résultat trouvé. ( ## sgdb.getNewHighscore(user, title); ##) ";
                }
 
-               //QString scoreInfo = sgdb.getInfoRank(username,gameFullName)
-               QString scoreInfo = sgdb.getInfoRank(user, title);
+               QString scoreInfo = sgdb.getInfoRank(username,gameFullName);
+               //QString scoreInfo = sgdb.getInfoRank(user, title);
 
 
                if (!scoreInfo.isEmpty()) {
@@ -380,18 +407,18 @@ QString vpinball = "VPinballX.exe";
 
 
                    // USELESSS
-                   QString titleTest = "Apex";
-                   QString userTest = "Gold";
+                   //QString titleTest = "Apex";
+                   //QString userTest = "Gold";
 
-                   QList<ScoreInfoTop> results_Front = sgdb.getTopScoresInFronUser(titleTest, userTest);
+                   //QList<ScoreInfoTop> results_Front = sgdb.getTopScoresInFronUser(titleTest, userTest);
 
-                   QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(titleTest, userTest);
-                   QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(titleTest);
+                   //QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(titleTest, userTest);
+                   //QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(titleTest);
 
-                   //QList<ScoreInfoTop> results_Front = sgdb.getTopScoresInFronUser(gameFullName, username);
+                   QList<ScoreInfoTop> results_Front = sgdb.getTopScoresInFronUser(gameFullName, username);
 
-                   //QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(gameFullName, username);
-                   //QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(gameFullName);
+                   QList<ScoreInfoTop> results_Behind = sgdb.getTopScoresBehindUser(gameFullName, username);
+                   QList<ScoreInfoTop> results_WorldScore = sgdb.getWorldScoreInfo(gameFullName);
 
 
                        for (const ScoreInfoTop &results_Behind : results_Behind) {
@@ -477,7 +504,7 @@ QString vpinball = "VPinballX.exe";
             //LECTURE FICHIER HIGHSCORE DE L'USER
 //######################################################################################################################################################
 //QFile file("pinemhi_userpath+nvram);
-            nvram = "totan_14.txt";
+            //nvram = "totan_14.txt";
 QFile file(pinemhi_userpath+nvram);
 
 if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -525,14 +552,14 @@ if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 //#############################################################################################################################################################
 
 
-//QString thread_score=high.getScore();
-//thread_score.replace(".","");
-//long long long_thread_score = thread_score.toLongLong();
+QString thread_score=high.getScore();
+thread_score.replace(".","");
+long long long_thread_score = thread_score.toLongLong();
 //qDebug()<< long_thread_score << "  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
-//Thread thread(vpinball,long_thread_score,high.getUser(),gameFullName,high.getPasswordFromConfig());
+Thread thread(vpinball,long_thread_score,high.getUser(),gameFullName,high.getPasswordFromConfig());
 //Thread thread(vpinball,myLongLong,u,g,p);
 
-//thread.start();
+thread.start();
 
 
 w.showFullScreen();

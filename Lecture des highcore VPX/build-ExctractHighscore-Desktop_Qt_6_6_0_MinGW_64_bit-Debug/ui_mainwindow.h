@@ -31,7 +31,7 @@ public:
             MainWindow->setObjectName("MainWindow");
         MainWindow->resize(1020, 651);
         MainWindow->setAutoFillBackground(false);
-        MainWindow->setStyleSheet(QString::fromUtf8(""));
+        MainWindow->setStyleSheet(QString::fromUtf8("background: transparent;"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         centralwidget->setStyleSheet(QString::fromUtf8(""));
@@ -39,7 +39,8 @@ public:
         gridLayout_2->setObjectName("gridLayout_2");
         graphicsView = new QGraphicsView(centralwidget);
         graphicsView->setObjectName("graphicsView");
-        graphicsView->setStyleSheet(QString::fromUtf8("border-image: url(:/Score.png);"));
+        graphicsView->setStyleSheet(QString::fromUtf8("border-image: url(:/Score.png);\n"
+"background: transparent;"));
 
         gridLayout_2->addWidget(graphicsView, 0, 0, 1, 1);
 
