@@ -1,3 +1,5 @@
+
+
 REM Appel de la fonction pour exécuter la commande
 
 call :ExecuteCommand "C:\From Future app\path.ini" "[GAMENAME]"
@@ -47,3 +49,16 @@ START /min "" vpinballx.exe "[DIREMU]" -minimized -play "[GAMEFULLNAME]"
 )
 exit /b
 
+:GetCurrentDate
+REM Récupérer la date du jour
+set "YEAR=%DATE:~6,4%"
+set "MONTH=%DATE:~3,2%"
+set "DAY=%DATE:~0,2%"
+set "HOUR=%TIME:~0,2%"
+set "MINUTE=%TIME:~3,2%"
+set "SECOND=%TIME:~6,2%"
+
+REM Définir la variable CURRENT_DATE au format log batch
+set "CURRENT_DATE=%YEAR%-%MONTH%-%DAY% %HOUR%:%MINUTE%:%SECOND%"
+
+exit /b
